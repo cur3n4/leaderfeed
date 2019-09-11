@@ -606,12 +606,15 @@ var LeaderFeed = function (_EventEmitter) {
           }
         }).on(SUB_ERROR, function (error) {
           debug$2('%s %O', SUB_ERROR, error);
+          _this3._clearHeartbeatInterval();
           return _this3._changeState(FOLLOWER);
         }).on(SUB_STARTED, function () {
           _this3.status = STARTED;
+          _this3._clearHeartbeatInterval();
           return _this3._changeState(FOLLOWER);
         }).on(HEARTBEAT_ERROR, function (error) {
           debug$2('%s %O', HEARTBEAT_ERROR, error);
+          _this3._clearHeartbeatInterval();
           return _this3._changeState(FOLLOWER);
         });
 
