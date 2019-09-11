@@ -137,14 +137,17 @@ export default class LeaderFeed extends EventEmitter {
       })
         .on(SUB_ERROR, error => {
           debug('%s %O', SUB_ERROR, error)
+          this._clearHeartbeatInterval();
           return this._changeState(FOLLOWER)
         })
         .on(SUB_STARTED, () => {
           this.status = STARTED
+          this._clearHeartbeatInterval();
           return this._changeState(FOLLOWER)
         })
         .on(HEARTBEAT_ERROR, error => {
           debug('%s %O', HEARTBEAT_ERROR, error)
+          this._clearHeartbeatInterval();
           return this._changeState(FOLLOWER)
         })
 
